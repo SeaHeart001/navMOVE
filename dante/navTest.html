@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>导航条demo</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        .wrap{
+            width: 100%;
+            height: 100%;
+            /* background-color: #e5e5e5; */
+            overflow-x: auto;
+        }
+        .wrap::-webkit-scrollbar {/*滚动条整体样式*/     /*高宽分别对应横竖滚动条的尺寸*/
+            height: 0px;
+            /* transition: 1s; */
+        }
+        .wrap::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+            transition: 1s;
+        }
+        .wrap ul{
+            width: 640px;
+            height: 30px;
+        }
+        .wrap li{
+            float: left;
+            width: 80px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: rgb(119, 0, 255);
+        }
+        .wrap li:hover{
+            background-color: darkgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap" name='wrap'>
+        <ul class='navWarp'>
+            <li>标题一</li>
+            <li>标题二</li>
+            <li>标题三</li>
+            <li>标题四</li>
+            <li>标题五</li>
+            <li>标题六</li>
+            <li>标题七</li>
+            <li>标题八</li>
+        </ul>
+    </div>
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        //jquery.....
+        // $('div[name="wrap"] li').click(function () {
+        //     var _this = $(this)
+        //     var curryIndex = _this.index()
+        //     var scrollEle = _this.parent().parent()
+        //     //scrollEle.scrollLeft(80*(curryIndex-2))
+        //     scrollEle.animate({
+        //         scrollLeft: 80*(curryIndex-2)
+        //     },500)
+        // })
+
+        //原生js.....
+        var lis = document.querySelectorAll('div[name="wrap"] li');
+        var timer;
+        for(var i=0;i<lis.length;i++){
+                (function (i) {
+                    lis[i].onclick = function () {
+                        clearInterval(timer1)
+                        clearInterval(timer2)
+                        console.log(i)
+                        var scrollWrap = document.querySelector('div[name="wrap"]');
+                        var curryScroll = scrollWrap.scrollLeft 
+                        //console.log(scrollWrap.scrollLeft)
+                        var moveX = (i-2)*80; //滚动条最小位移为0，最大为240多一些，设为260；
+                        if(moveX>260){
+                            moveX = 260
+                        }else if(moveX<0){
+                            moveX = 0
+                        }else{
+                            moveX =(i-2)*80;
+                        }
+                        //当前位置大于要滚动的位置
+                        if(moveX<curryScroll){
+                            var timer1 = setInterval(function () {
+                                scrollWrap.scrollLeft-=20;
+                                if(scrollWrap.scrollLeft<=moveX){
+                                    scrollWrap.scrollLeft=moveX
+                                    clearInterval(timer1)
+                                }
+                            },50)
+                        }
+                        //当前位置小于要滚动的位置
+                        if(moveX>=curryScroll){
+                            var timer2 = setInterval(function () {
+                                scrollWrap.scrollLeft+=20;
+                                if(scrollWrap.scrollLeft>=moveX){
+                                    scrollWrap.scrollLeft=moveX
+                                    clearInterval(timer2)
+                                }
+                            },50)
+                        }
+                        //scrollWrap.scrollLeft = moveX
+                    }
+                })(i);  
+        }
+        
+    </script>
+</body>
+</html>
