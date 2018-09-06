@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #scroll div{
+            text-align: center;
+            line-height: 50px;
+        }
+        #scroll div:hover{
+            background-color: rgb(124, 141, 135) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='test'>
+        <input id='test1' type="button" value="测试1"/>
+        <input id='test2' type="checkbox" value="测试2">测试2
+        <div id="content" class="contBox" style='background-color: aqua;width: 200px;height: 100px;'></div>
+    </div>
+    <div id="scroll" style='margin-top: 10px; width: 200px;height: 300px; overflow-y: auto; background-color: rgb(206, 218, 218)'>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素1</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素2</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素3</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素4</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素5</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素6</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素7</div>
+        <div style='width: 100%; height: 50px; background-color: rgb(10, 233, 233);'>元素8</div>
+    </div>
+<script src="./jquery-1.12.4.js"></script>
+<script>
+            // var nowdate = new Date();
+        // var nowyear = nowdate.getFullYear();
+        // var nowMonth = nowdate.getMonth();
+        // var nowday = nowdate.getDate();
+        // console.log(nowyear+'-'+(nowMonth+1)+'-'+nowday)
+        // var frontDate = new Date(nowyear,nowMonth,nowday-30)
+        // //var frontDate = new Date(2018,1,22)
+        // var frontyear = frontDate.getFullYear();
+        // var frontMonth = frontDate.getMonth();
+        // var frontday = frontDate.getDate();
+        // console.log(nowyear+'-'+(frontMonth+1)+'-'+frontday)
+        String.prototype.replaceAll = function(s1, s2) {
+            return this.replace(new RegExp(s1, 'gm'), s2);
+        }
+        function dayUtil(daymsg, textRuin) {
+            var textstr = textRuin || 'YYYY-MM-DD;hh-mm-ss'
+            var year = daymsg.getFullYear();
+            var month = daymsg.getMonth()+1;
+            var day = daymsg.getDate();
+            var hour = daymsg.getHours();
+            var minute = daymsg.getMinutes();
+            var seconds = daymsg.getSeconds();
+            month = month>9? month:'0'+month;
+            day = day>9? day:'0'+day;
+            hour = hour>9? hour:'0'+hour;
+            minute = minute>9? minute:'0'+minute;
+            seconds = seconds>9? seconds:'0'+seconds; 
+            var resultMsg = textstr.replaceAll('YYYY', year).replaceAll('MM', month).replaceAll('DD', day).replaceAll('hh', hour).replaceAll('mm', minute).replaceAll('ss', seconds);   
+            return resultMsg
+        }
+        var newDay = dayUtil(new Date(),'YYYY-MM-DD;hh-mm-ss'); console.log(newDay)
+    $(function() {
+        $('#test1').click(function () {
+            if( $('#test2').prop('checked')){
+                $('#test2').prop('checked',false)
+            }else{
+                $('#test2').prop('checked',true)
+            }
+        })
+
+        $('#scroll div').click(function () {
+            console.log('scroll')
+            $(this).parent().scrollTop($(this).index()*50)
+        })
+    })
+    
+</script>
+    
+</body>
+
+</html>
